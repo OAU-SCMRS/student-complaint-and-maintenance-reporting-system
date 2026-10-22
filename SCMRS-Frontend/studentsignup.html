@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Sign Up page</title>
+    <link rel="stylesheet" href="/css/studentsignup.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+   <div class="container">
+
+        <div class="info">
+
+            <img src="images/logo.svg" alt="Fix OAU" width="26" height="31">
+
+            <h2>Student Portal</h2>
+
+        </div>
+
+        <div class="signup-card">
+
+            <form id="signupForm" action="">
+
+                <h1>Sign Up</h1>
+
+                <p>Enter your Credentials to continue</p>
+
+                 <div class="input-box">
+                    <input type="text" id="studentId" name="studentId" placeholder="Student Id" required>
+                    <span class="material-icons">person</span>
+                </div>
+
+                <div class="input-box">
+                    <input type="email" id="email" name="email" placeholder="Email Address" required>
+                    <span class="material-icons">email</span>
+                </div>
+
+                <div class="input-box">
+                    <input type="password" id="password" name="password" placeholder="Create Password" required>
+                    <span class="material-icons" id="visible">visibility</span>
+                </div>
+
+                <div class="input-box">
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
+                    <span class="material-icons" id="visibleConfirm">visibility</span>
+                </div>
+
+                <p id="errorMsg" class="error-msg" role="alert"></p>
+
+                <button type="submit" class="register"> Register</button>
+                
+                <div class="login">
+                    <span>Have an account? <a href="studentlogin.html">Login</a></span>
+                </div>
+
+                <div class="home">
+                    <a href="index.html">⬅ Back to Home</a>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <script src="/js/studentsignup.js"></script>
+</body>
+</html>

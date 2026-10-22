@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage complaints | FixOAU</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+  <aside class="sidebar" id="sidebar">
+    <a class="side-brand" href="index.html">
+      <img src="images/logo.svg" alt="" width="26" height="31">
+      <span>FixOAU</span>
+    </a>
+    <nav class="side-nav">
+      <a href="admin.html">Overview</a>
+      <a href="manage-complaints.html" class="active">Manage Complaints</a>
+      <a href="students.html">Students</a>
+      <a href="reports.html">Reports &amp; Analytics</a>
+      <a href="#">Notifications</a>
+      <a href="admin-profile.html">Settings</a>
+    </nav>
+    <a class="logout" href="index.html">Log Out</a>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <button class="menu-btn" id="menu-btn" aria-label="Menu">Menu</button>
+      <div class="greet">
+        <h1>Manage Complaints</h1>
+        <p>View, assign and update complaints.</p>
+      </div>
+      <div class="top-right">
+        <a class="bell" href="#" aria-label="Notifications">
+          <svg viewBox="0 0 24 24"><path d="M6 17V11a6 6 0 1 1 12 0v6l1.5 2h-15zM10 21h4"/></svg>
+        </a>
+        <span class="avatar">A</span>
+      </div>
+    </header>
+
+    <main class="content">
+      <div class="toolbar">
+        <input type="search" id="search" placeholder="Search by ID, problem or location..." aria-label="Search complaints">
+        <select id="filter" aria-label="Filter by status">
+          <option value="">All Status</option>
+          <option>Pending</option>
+          <option>In Progress</option>
+          <option>Resolved</option>
+        </select>
+      </div>
+
+      <section class="panel">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>ID</th><th>Problem</th><th>Location</th><th>Status</th><th>Assigned To</th><th>Action</th></tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+          </table>
+        </div>
+        <p class="empty" id="empty" hidden>No complaints match your search.</p>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="dialog" class="dialog">
+    <h2 id="dialog-title"></h2>
+    <ul class="notes" id="dialog-notes"></ul>
+    <label for="note-text">New update for the student</label>
+    <textarea id="note-text" rows="3" placeholder="e.g. An electrician has been assigned"></textarea>
+    <p class="error" id="note-error" role="alert"></p>
+    <div class="dialog-actions">
+      <button type="button" class="btn-ghost" id="note-cancel">Cancel</button>
+      <button type="button" class="btn-small" id="note-save">Save update</button>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="js/manage.js"></script>
+  <script src="js/admin-notify.js"></script>
+</body>
+</html>

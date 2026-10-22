@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notifications | FixOAU Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+  <aside class="sidebar" id="sidebar">
+    <a class="side-brand" href="index.html">
+      <img src="images/logo.svg" alt="" width="26" height="31">
+      <span>FixOAU</span>
+    </a>
+    <nav class="side-nav">
+      <a href="admin.html">Overview</a>
+      <a href="manage-complaints.html">Manage Complaints</a>
+      <a href="students.html">Students</a>
+      <a href="reports.html">Reports &amp; Analytics</a>
+      <a href="admin-notifications.html" class="active">Notifications</a>
+      <a href="admin-profile.html">Settings</a>
+    </nav>
+    <a class="logout" href="index.html">Log Out</a>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <button class="menu-btn" id="menu-btn" aria-label="Menu">Menu</button>
+      <div class="greet">
+        <h1>Notifications</h1>
+        <p>New complaints and anything that needs your attention.</p>
+      </div>
+      <div class="top-right">
+        <a class="bell" href="#" aria-label="Notifications">
+          <svg viewBox="0 0 24 24"><path d="M6 17V11a6 6 0 1 1 12 0v6l1.5 2h-15zM10 21h4"/></svg>
+        </a>
+        <span class="avatar">A</span>
+      </div>
+    </header>
+
+    <main class="content">
+      <div class="page-actions">
+        <div class="tabs" role="tablist">
+          <button class="tab active" role="tab" data-tab="All"></button>
+          <button class="tab" role="tab" data-tab="Unread"></button>
+        </div>
+        <button class="mark-all" id="mark-all">Mark all as read</button>
+      </div>
+
+      <div class="notif-list" id="list"></div>
+      <p class="empty" id="empty" hidden>You are all caught up.</p>
+    </main>
+  </div>
+
+  <script src="js/admin-notify.js"></script>
+  <script src="js/admin-notifications.js"></script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notifications | FixOAU</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+  <aside class="sidebar" id="sidebar">
+    <a class="side-brand" href="index.html">
+      <img src="images/logo.svg" alt="" width="26" height="31">
+      <span>FixOAU</span>
+    </a>
+    <nav class="side-nav">
+      <a href="student.html">Dashboard</a>
+      <a href="report.html">Report a Problem</a>
+      <a href="complaints.html">My Complaints</a>
+      <a href="notifications.html" class="active">Notifications</a>
+      <a href="profile.html">Profile</a>
+    </nav>
+    <a class="logout" id="logout-btn" href="#">Log Out</a>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <button class="menu-btn" id="menu-btn" aria-label="Menu">Menu</button>
+      <div class="greet">
+        <h1>Notifications</h1>
+        <p>Stay up to date with your complaints.</p>
+      </div>
+      <div class="top-right">
+        <button type="button" class="demo-badge" id="demo-chip" title="Click to test login / switch user"><span class="dot"></span><span id="chip-user">group14</span></button>
+        <a class="bell" href="notifications.html" aria-label="Notifications">
+          <svg viewBox="0 0 24 24"><path d="M6 17V11a6 6 0 1 1 12 0v6l1.5 2h-15zM10 21h4"/></svg>
+        </a>
+        <span class="avatar" id="avatar"></span>
+      </div>
+    </header>
+
+    <main class="content">
+      <div class="page-actions">
+        <div class="tabs" role="tablist">
+          <button class="tab active" role="tab" data-tab="All"></button>
+          <button class="tab" role="tab" data-tab="Unread"></button>
+        </div>
+        <button class="mark-all" id="mark-all">Mark all as read</button>
+      </div>
+
+      <div class="notif-list" id="list"></div>
+      <p class="empty" id="empty" hidden>You are all caught up.</p>
+    </main>
+  </div>
+
+  <dialog id="auth-dialog" class="auth-dialog">
+    <h2>Student Account Access</h2>
+    <p class="subtitle">Log in to your student account or test with demo credentials.</p>
+    <div class="demo-box">
+      <div><strong>Demo Credentials:</strong></div>
+      <div>Student ID: <strong>group14</strong></div>
+      <div>Password: <strong>grioup141234</strong></div>
+      <button type="button" class="btn-demo-fill" id="fill-demo-btn">Fill Demo Credentials</button>
+    </div>
+    <form id="login-form">
+      <label for="login-student-id">Student ID</label>
+      <input type="text" id="login-student-id" placeholder="e.g. group14" required autocomplete="username">
+      <label for="login-password">Password</label>
+      <input type="password" id="login-password" placeholder="Enter password" required autocomplete="current-password">
+      <p class="error" id="login-error" role="alert"></p>
+      <div class="auth-dialog-actions">
+        <button type="button" class="btn-ghost" id="login-cancel-btn">Cancel</button>
+        <button type="submit" class="btn-small">Log In</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="js/student.js"></script>
+  <script src="js/notifications.js"></script>
+</body>
+</html>

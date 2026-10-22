@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin dashboard | FixOAU</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+  <aside class="sidebar" id="sidebar">
+    <a class="side-brand" href="index.html">
+      <img src="images/logo.svg" alt="" width="26" height="31">
+      <span>FixOAU</span>
+    </a>
+    <nav class="side-nav">
+      <a href="admin.html" class="active">Overview</a>
+      <a href="manage-complaints.html">Manage Complaints</a>
+      <a href="students.html">Students</a>
+      <a href="reports.html">Reports &amp; Analytics</a>
+      <a href="admin-notifications.html">Notifications</a>
+      <a href="admin-profile.html">Settings</a>
+    </nav>
+    <a class="logout" href="index.html">Log Out</a>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <button class="menu-btn" id="menu-btn" aria-label="Menu">Menu</button>
+      <div class="greet">
+        <h1 id="greeting"></h1>
+        <p>Here is what is happening with the maintenance requests.</p>
+      </div>
+      <div class="top-right">
+        <a class="bell" href="admin-notifications.html" aria-label="Notifications">
+          <svg viewBox="0 0 24 24"><path d="M6 17V11a6 6 0 1 1 12 0v6l1.5 2h-15zM10 21h4"/></svg>
+        </a>
+        <span class="avatar">A</span>
+      </div>
+    </header>
+
+    <main class="content">
+      <section class="stats">
+        <div class="stat">
+          <span class="stat-icon i-total"><svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9zM9 12h6M9 16h4"/></svg></span>
+          <div><p>Total Complaints</p><strong id="stat-total">0</strong></div>
+        </div>
+        <div class="stat">
+          <span class="stat-icon i-pending"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+          <div><p>Pending</p><strong id="stat-pending">0</strong></div>
+        </div>
+        <div class="stat">
+          <span class="stat-icon i-progress"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v4h-4"/></svg></span>
+          <div><p>In Progress</p><strong id="stat-progress">0</strong></div>
+        </div>
+        <div class="stat">
+          <span class="stat-icon i-resolved"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></span>
+          <div><p>Resolved</p><strong id="stat-resolved">0</strong></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Recent Complaints</h2>
+          <a href="manage-complaints.html">View all →</a>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>ID</th><th>Problem</th><th>Location</th><th>Status</th><th>Date</th><th>Assigned To</th></tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/admin.js"></script>
+  <script src="js/admin-notify.js"></script>
+</body>
+</html>
