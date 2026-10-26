@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report a problem | FixOAU</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/studentdashboard.css">
+</head>
+<body data-role="student">
+
+  <input type="checkbox" id="nav-check" class="nav-check" aria-label="Toggle navigation menu">
+  <label class="sidebar-overlay" for="nav-check"></label>
+
+  <aside class="sidebar">
+    <a class="side-brand" href="../index.html">
+      <img src="../images/logo.svg" alt="" width="26" height="31">
+      <span>FixOAU</span>
+    </a>
+    <label class="side-close" for="nav-check"><span class="sr-only">Close menu</span></label>
+    <nav class="side-nav">
+      <a href="student.html">Dashboard</a>
+      <a href="report.html" class="active">Report a Problem</a>
+      <a href="complaints.html">My Complaints</a>
+      <a href="notifications.html">Notifications</a>
+      <a href="profile.html">Profile</a>
+    </nav>
+    <a class="logout" href="../index.html">Log Out</a>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <label class="menu-btn" for="nav-check"><span class="bars" aria-hidden="true"></span><span class="sr-only">Open menu</span></label>
+      <div class="greet">
+        <h1>Report a Problem</h1>
+        <p>Fill in the details below to submit a maintenance request.</p>
+      </div>
+      <div class="top-right">
+        <a class="bell" href="notifications.html" aria-label="Notifications">
+          <svg viewBox="0 0 24 24"><path d="M6 17V11a6 6 0 1 1 12 0v6l1.5 2h-15zM10 21h4"/></svg>
+        </a>
+        <span class="avatar" id="avatar"></span>
+      </div>
+    </header>
+
+    <main class="content">
+
+      <section class="panel form-panel" id="form-panel">
+        <form id="report-form" method="post" enctype="multipart/form-data" novalidate>
+
+          <label for="title">Problem Title <span class="req">*</span></label>
+          <input type="text" id="title" placeholder="e.g. Faulty light in Block A">
+
+          <label for="category">Category <span class="req">*</span></label>
+          <select id="category">
+            <option value="">Select category</option>
+          </select>
+
+          <label for="location">Location <span class="req">*</span></label>
+          <input type="text" id="location" list="locations" placeholder="Select location or enter details">
+          <datalist id="locations"></datalist>
+
+          <label for="description">Description <span class="req">*</span></label>
+          <textarea id="description" rows="4" placeholder="Describe the issue in detail..."></textarea>
+
+          <span class="field-label">Add Photos (optional)</span>
+          <label class="dropzone" id="dropzone" for="photos">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4zM12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg>
+            <strong>Click to upload or drag and drop</strong>
+            <small id="photo-hint"></small>
+          </label>
+          <input type="file" id="photos" class="sr-only" accept="image/*" multiple>
+          <div class="thumbs" id="thumbs"></div>
+
+          <p class="error" id="error" role="alert"></p>
+          <button type="submit" class="btn">Submit Report</button>
+        </form>
+      </section>
+
+      <section class="panel form-panel success" id="success" hidden>
+        <div class="success-check">✓</div>
+        <h2>Complaint submitted</h2>
+        <p class="muted">Thank you. Keep your complaint number so you can track it.</p>
+        <p class="complaint-number" id="complaint-number"></p>
+        <div class="success-actions">
+          <a href="complaints.html" class="btn">View My Complaints</a>
+          <a href="report.html" class="btn-outline">Report another</a>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/core.js"></script>
+  <script src="../js/demo.js"></script>
+  <script src="../js/report.js"></script>
+
+</body>
+</html>

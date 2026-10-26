@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage complaints | FixOAU</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin-dashboard.css">
+</head>
+<body data-role="admin">
+
+  <input type="checkbox" id="nav-check" class="nav-check" aria-label="Toggle navigation menu">
+  <label class="sidebar-overlay" for="nav-check"></label>
+
+  <aside class="sidebar">
+    <a class="side-brand" href="../index.html">
+      <img src="../images/logo.svg" alt="" width="26" height="31">
+      <span>FixOAU</span>
+    </a>
+    <label class="side-close" for="nav-check"><span class="sr-only">Close menu</span></label>
+    <nav class="side-nav">
+      <a href="admin.html">Overview</a>
+      <a href="manage-complaints.html" class="active">Manage Complaints</a>
+      <a href="adminreports.html">Reports &amp; Analytics</a>
+      <a href="admin-notifications.html">Notifications</a>
+      <a href="admin-profile.html">Settings</a>
+    </nav>
+    <a class="logout" href="../index.html">Log Out</a>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <label class="menu-btn" for="nav-check"><span class="bars" aria-hidden="true"></span><span class="sr-only">Open menu</span></label>
+      <div class="greet">
+        <h1>Manage Complaints</h1>
+        <p>View, assign and update complaints.</p>
+      </div>
+      <div class="top-right">
+        <a class="bell" href="admin-notifications.html" aria-label="Notifications">
+          <svg viewBox="0 0 24 24"><path d="M6 17V11a6 6 0 1 1 12 0v6l1.5 2h-15zM10 21h4"/></svg>
+        </a>
+        <span class="avatar" id="avatar"></span>
+      </div>
+    </header>
+
+    <main class="content">
+      <div class="toolbar">
+        <input type="search" id="search" placeholder="Search by ID, problem or location..." aria-label="Search complaints">
+        <select id="filter" aria-label="Filter by status">
+          <option value="">All Status</option>
+        </select>
+      </div>
+
+      <section class="panel">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>ID</th><th>Problem</th><th>Location</th><th>Status</th><th>Assigned To</th><th>Action</th></tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+          </table>
+        </div>
+        <nav class="pager" id="pager" aria-label="Pagination" hidden></nav>
+        <p class="empty" id="empty" hidden>No complaints match your search.</p>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="dialog" class="dialog">
+    <h2 id="dialog-title"></h2>
+    <div class="dialog-info" id="dialog-info"></div>
+
+    <label for="dialog-status">Status</label>
+    <select id="dialog-status" autofocus></select>
+
+    <label for="dialog-assignee">Assigned to</label>
+    <input type="text" id="dialog-assignee" list="assignee-list" autocomplete="off" placeholder="e.g. Electrical unit">
+    <datalist id="assignee-list"></datalist>
+
+    <label>Updates sent to the student</label>
+    <ul class="notes" id="dialog-notes"></ul>
+
+    <label for="note-text">New update for the student</label>
+    <textarea id="note-text" rows="3" placeholder="e.g. An electrician has been assigned"></textarea>
+    <p class="error" id="note-error" role="alert"></p>
+    <div class="dialog-actions">
+      <button type="button" class="btn-ghost" id="note-cancel">Cancel</button>
+      <button type="button" class="btn-small" id="note-save">Save update</button>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/core.js"></script>
+  <script src="../js/demo.js"></script>
+  <script src="../js/manage-complaints.js"></script>
+
+</body>
+</html>

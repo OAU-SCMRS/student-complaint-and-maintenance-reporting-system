@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My profile | FixOAU</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/studentdashboard.css">
+</head>
+<body data-role="student">
+
+  <input type="checkbox" id="nav-check" class="nav-check" aria-label="Toggle navigation menu">
+  <label class="sidebar-overlay" for="nav-check"></label>
+
+  <aside class="sidebar">
+    <a class="side-brand" href="../index.html">
+      <img src="../images/logo.svg" alt="" width="26" height="31">
+      <span>FixOAU</span>
+    </a>
+    <label class="side-close" for="nav-check"><span class="sr-only">Close menu</span></label>
+    <nav class="side-nav">
+      <a href="student.html">Dashboard</a>
+      <a href="report.html">Report a Problem</a>
+      <a href="complaints.html">My Complaints</a>
+      <a href="notifications.html">Notifications</a>
+      <a href="profile.html" class="active">Profile</a>
+    </nav>
+    <a class="logout" href="../index.html">Log Out</a>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <label class="menu-btn" for="nav-check"><span class="bars" aria-hidden="true"></span><span class="sr-only">Open menu</span></label>
+      <div class="greet">
+        <h1>My Profile</h1>
+        <p>View and edit your personal details.</p>
+      </div>
+      <div class="top-right">
+        <a class="bell" href="notifications.html" aria-label="Notifications">
+          <svg viewBox="0 0 24 24"><path d="M6 17V11a6 6 0 1 1 12 0v6l1.5 2h-15zM10 21h4"/></svg>
+        </a>
+        <span class="avatar" id="avatar"></span>
+      </div>
+    </header>
+
+    <main class="content">
+
+      <section class="panel pcard pcard-head">
+        <span class="big-avatar" id="hdr-avatar"></span>
+        <div>
+          <h2 id="hdr-name"></h2>
+          <p class="muted" id="hdr-email"></p>
+          <span class="role-tag" id="hdr-role"></span>
+        </div>
+      </section>
+
+      <section class="panel pcard">
+        <h2>Personal Information</h2>
+        <form id="info-form" novalidate>
+          <div class="pgrid">
+            <div>
+              <label for="name">Full name</label>
+              <input type="text" id="name" autocomplete="name">
+            </div>
+            <div>
+              <label for="fixed">Matric number</label>
+              <input type="text" id="fixed" readonly>
+            </div>
+            <div>
+              <label for="email">Email address</label>
+              <input type="email" id="email" autocomplete="email">
+            </div>
+            <div>
+              <label for="phone">Phone (optional)</label>
+              <input type="tel" id="phone" autocomplete="tel">
+            </div>
+          </div>
+          <p class="error" id="info-error" role="alert"></p>
+          <button type="submit" class="btn-small">Save changes</button>
+        </form>
+      </section>
+
+      <section class="panel pcard">
+        <h2>Change Password</h2>
+        <form id="pw-form" novalidate>
+          <div class="pgrid">
+            <div class="span2">
+              <label for="current">Current password</label>
+              <div class="pw-wrap">
+                <input type="password" id="current" autocomplete="current-password">
+                <button type="button" class="pw-toggle" data-target="current">Show</button>
+              </div>
+            </div>
+            <div>
+              <label for="new">New password</label>
+              <div class="pw-wrap">
+                <input type="password" id="new" autocomplete="new-password">
+                <button type="button" class="pw-toggle" data-target="new">Show</button>
+              </div>
+            </div>
+            <div>
+              <label for="confirm">Confirm new password</label>
+              <div class="pw-wrap">
+                <input type="password" id="confirm" autocomplete="new-password">
+                <button type="button" class="pw-toggle" data-target="confirm">Show</button>
+              </div>
+            </div>
+          </div>
+          <p class="error" id="pw-error" role="alert"></p>
+          <button type="submit" class="btn-small">Update password</button>
+        </form>
+      </section>
+
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/core.js"></script>
+  <script src="../js/demo.js"></script>
+  <script src="../js/profile.js"></script>
+
+</body>
+</html>

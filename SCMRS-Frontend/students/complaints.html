@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My complaints | FixOAU</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/studentdashboard.css">
+</head>
+<body data-role="student">
+
+  <input type="checkbox" id="nav-check" class="nav-check" aria-label="Toggle navigation menu">
+  <label class="sidebar-overlay" for="nav-check"></label>
+
+  <aside class="sidebar">
+    <a class="side-brand" href="../index.html">
+      <img src="../images/logo.svg" alt="" width="26" height="31">
+      <span>FixOAU</span>
+    </a>
+    <label class="side-close" for="nav-check"><span class="sr-only">Close menu</span></label>
+    <nav class="side-nav">
+      <a href="student.html">Dashboard</a>
+      <a href="report.html">Report a Problem</a>
+      <a href="complaints.html" class="active">My Complaints</a>
+      <a href="notifications.html">Notifications</a>
+      <a href="profile.html">Profile</a>
+    </nav>
+    <a class="logout" href="../index.html">Log Out</a>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <label class="menu-btn" for="nav-check"><span class="bars" aria-hidden="true"></span><span class="sr-only">Open menu</span></label>
+      <div class="greet">
+        <h1>My Complaints</h1>
+        <p>View and track all your submitted complaints.</p>
+      </div>
+      <div class="top-right">
+        <a class="bell" href="notifications.html" aria-label="Notifications">
+          <svg viewBox="0 0 24 24"><path d="M6 17V11a6 6 0 1 1 12 0v6l1.5 2h-15zM10 21h4"/></svg>
+        </a>
+        <span class="avatar" id="avatar"></span>
+      </div>
+    </header>
+
+    <main class="content">
+      <div class="page-actions">
+        <div class="tabs" role="tablist">
+          <button class="tab active" role="tab" data-status="All">All</button>
+          <button class="tab" role="tab" data-status="Pending">Pending</button>
+          <button class="tab" role="tab" data-status="In Progress">In Progress</button>
+          <button class="tab" role="tab" data-status="Resolved">Resolved</button>
+        </div>
+        <a href="report.html" class="btn-small">+ Report a Problem</a>
+      </div>
+
+      <section class="panel">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>ID</th><th>Problem</th><th>Location</th><th>Status</th><th>Date</th><th>View</th></tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+          </table>
+        </div>
+        <nav class="pager" id="pager" aria-label="Pagination" hidden></nav>
+        <div class="empty" id="empty" hidden>
+          <p>No complaints found in this section.</p>
+          <a href="report.html" class="btn-small">+ Report a Problem</a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/core.js"></script>
+  <script src="../js/demo.js"></script>
+  <script src="../js/complaints.js"></script>
+
+</body>
+</html>

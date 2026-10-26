@@ -1,0 +1,171 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.container{
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: center;
+    align-content: center;
+    min-height: 100vh;
+    border-radius: 15px;
+}
+
+.info{
+    width: 170px;
+    background: #1A56C8;
+    text-align: center;
+    border-radius: 15px;
+}
+
+.signup-card{
+    position: relative;
+    width: 430px;
+    background: #ffff;
+    padding: 10px 20px;
+    min-height: 450px;
+}
+
+.signup-card h1{
+    text-align: center;
+    margin: 10px 0;
+}
+
+.signup-card p{
+    text-align: center;
+    margin: 10px 0;
+}
+
+.input-box{
+    width: 100%;
+    height: 40px;
+    margin: 20px 0;
+}
+
+.input-box input[type=text], input[type=password], input[type=email]{
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    border-radius: 15px;
+    border:2px solid #1A56C8;
+    padding: 0 10px;
+}
+
+.input-box input::placeholder{
+    color: black;
+}
+
+.input-box .material-icons{
+    position: absolute;
+    right: 30px;
+    transform: translateY(25%);
+}
+
+button.pw-eye{
+    background: none;
+    border: 0;
+    padding: 0;
+    color: inherit;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+button.pw-eye:focus-visible{
+    outline: 3px solid #F2B632;
+    border-radius: 4px;
+}
+
+.register{
+    background: #1A56C8;
+    margin: 10px 0;
+    width: 100%;
+    height: 40px;
+    border: none;
+    outline: none;
+    border-radius: 15px;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.login{
+    text-align: center;
+    margin: 10px 0;
+}
+
+.login a{
+    text-decoration: none;
+    color: black;
+    font-weight: 700;
+}
+
+.login a:hover{
+    text-decoration: underline;
+}
+
+
+.home{
+    margin: 10px 0;
+    text-align: center;
+}
+
+.home a{
+    text-decoration: none;
+    color: black;
+    font-weight: 700;    
+}
+
+.home a:hover{
+    text-decoration: underline;
+}
+
+.error-msg {
+    color: #d93025;
+    font-size: 14px;
+    margin: 8px 0;
+    min-height: 18px;
+}
+
+.input-box input.invalid {
+    border: 2px solid #d93025;
+}
+
+.error-msg.ok {
+    color: #17803D;
+}
+
+.login:disabled, .register:disabled {
+    opacity: .6;
+    cursor: wait;
+}
+
+.login, .register {
+    cursor: pointer;
+}
+
+@media (max-width: 640px) {
+    .container {
+        grid-auto-flow: row;
+        align-content: start;
+        justify-content: stretch;
+    }
+    .info {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 14px;
+        border-radius: 0;
+    }
+    .info h2 { font-size: 1.1rem; }
+    .login-card, .signup-card {
+        width: 100%;
+        max-width: 480px;
+        margin: 0 auto;
+        padding: 10px 20px 30px;
+    }
+}
