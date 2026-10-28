@@ -16,9 +16,19 @@ window.SCMRS_CONFIG = {
    *      "Authorization: Bearer ...", so allow_headers must include "Authorization".
    *      Only set CREDENTIALS to "include" (and allow_credentials=True) if you use cookie sessions.
    */
-  API_BASE: (typeof window !== "undefined" && (window.location.port === "8000" || window.location.pathname.startsWith("/api")))
-    ? "/api"
-    : "http://127.0.0.1:8000/api",
+  API_BASE: (function() {
+    if (typeof window === "undefined") return "/api";
+    // Separate local dev server (e.g. Live Server on 5500, or Vite on 3000/5173)
+    if (["5500", "3000", "5173"].includes(window.location.port)) {
+      return "http://127.0.0.1:8000/api";
+    }
+    // Opened directly from filesystem (file://)
+    if (window.location.protocol === "file:") {
+      return "http://127.0.0.1:8000/api";
+    }
+    // Production deployments (Render, custom domain) or unified local server (:8000)
+    return "/api";
+  })(),
   CREDENTIALS: "omit",
 
   /* DEMO MODE: lets people explore the student and admin dashboards with sample data and no
