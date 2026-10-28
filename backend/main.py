@@ -65,12 +65,16 @@ app.mount("/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
 # Configuration Constants
 ADMIN_ACCESS_CODE = os.environ.get("ADMIN_ACCESS_CODE", "FIXOAU-ADMIN")
 MAX_PHOTOS = 5
-MAX_PHOTO_BYTES = 5 * 1024 * 1024
+MAX_PHOTO_BYTES = 15 * 1024 * 1024
 ALLOWED_IMAGE_TYPES = {
     "image/jpeg": ".jpg",
+    "image/jpg": ".jpg",
     "image/png": ".png",
     "image/webp": ".webp",
-    "image/gif": ".gif"
+    "image/gif": ".gif",
+    "image/bmp": ".bmp",
+    "image/heic": ".heic",
+    "image/heif": ".heif"
 }
 DEFAULT_CATEGORIES = [
     "Faulty lights",
@@ -400,27 +404,29 @@ async def create_student_complaint(
         raise HTTPException(status_code=400, detail=f"Maximum of {MAX_PHOTOS} photos allowed")
 
     saved_photo_urls = []
-    for file in photos:
-        if not file.filename:
-            continue
-            
-        content_type = file.content_type or ""
-        ext = ALLOWED_IMAGE_TYPES.get(content_type)
-        if not ext:
-            _, raw_ext = os.path.splitext(file.filename)
-            ext = raw_ext.lower() if raw_ext.lower() in [".jpg", ".jpeg", ".png", ".webp", ".gif"] else ".jpg"
+    if photos:
+        os.makedirs(UPLOAD_DIR, exist_ok=True)
+        for file in photos:
+            if not file or not getattr(file, "filename", None):
+                continue
+                
+            content_type = file.content_type or ""
+            ext = ALLOWED_IMAGE_TYPES.get(content_type)
+            if not ext:
+                _, raw_ext = os.path.splitext(file.filename)
+                ext = raw_ext.lower() if raw_ext.lower() in [".jpg", ".jpeg", ".png", ".webp", ".gif", ".bmp", ".heic", ".heif", ".jfif"] else ".jpg"
 
-        unique_name = f"{uuid.uuid4().hex}{ext}"
-        destination = os.path.join(UPLOAD_DIR, unique_name)
+            unique_name = f"{uuid.uuid4().hex}{ext}"
+            destination = os.path.join(UPLOAD_DIR, unique_name)
 
-        content = await file.read()
-        if len(content) > MAX_PHOTO_BYTES:
-            raise HTTPException(status_code=400, detail=f"File {file.filename} exceeds maximum size of 5 MB")
+            content = await file.read()
+            if len(content) > MAX_PHOTO_BYTES:
+                raise HTTPException(status_code=400, detail=f"File {file.filename} exceeds maximum size of 15 MB")
 
-        with open(destination, "wb") as f:
-            f.write(content)
+            with open(destination, "wb") as f:
+                f.write(content)
 
-        saved_photo_urls.append(f"/uploads/{unique_name}")
+            saved_photo_urls.append(f"/uploads/{unique_name}")
 
     now = datetime.now(timezone.utc)
     new_complaint = models.Complaint(

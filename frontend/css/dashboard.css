@@ -222,6 +222,7 @@ input[readonly] { background: var(--bg); color: var(--muted); cursor: not-allowe
   border: 2px dashed var(--line); border-radius: 12px; padding: 26px 16px;
   background: var(--bg); cursor: pointer; font-weight: 500; transition: border-color .15s, background .15s;
 }
+.dropzone * { pointer-events: none; }
 .dropzone svg { width: 30px; height: 30px; stroke: var(--link); fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .dropzone strong { font-size: .95rem; }
 .dropzone small { color: var(--muted); }

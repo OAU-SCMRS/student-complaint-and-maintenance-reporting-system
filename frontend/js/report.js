@@ -28,8 +28,9 @@ SCMRS.page(() => {
   function addFiles(list) {
     const problems = [];
     Array.from(list).forEach(file => {
-      if (!file.type.startsWith("image/")) { problems.push(`${file.name} is not an image.`); return; }
-      if (file.size > maxMB * 1024 * 1024) { problems.push(`${file.name} is larger than ${maxMB} MB.`); return; }
+      const isImg = (file.type && file.type.startsWith("image/")) || /\.(jpe?g|png|webp|gif|bmp|heic|heif|jfif|svg)$/i.test(file.name);
+      if (!isImg) { problems.push(`${file.name} is not a supported image file.`); return; }
+      if (file.size > maxMB * 1024 * 1024) { problems.push(`${file.name} exceeds the ${maxMB} MB limit.`); return; }
       if (files.some(f => f.name === file.name && f.size === file.size && f.lastModified === file.lastModified)) return;
       if (files.length >= max) { problems.push(`You can attach up to ${max} photos.`); return; }
       files.push(file);
@@ -56,10 +57,21 @@ SCMRS.page(() => {
     });
   }
 
+  dropzone.addEventListener("click", e => {
+    e.preventDefault();
+    fileInput.click();
+  });
+  dropzone.addEventListener("keydown", e => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      fileInput.click();
+    }
+  });
+
   fileInput.addEventListener("change", () => addFiles(fileInput.files));
   ["dragenter", "dragover"].forEach(t => dropzone.addEventListener(t, e => { e.preventDefault(); dropzone.classList.add("over"); }));
   ["dragleave", "drop"].forEach(t => dropzone.addEventListener(t, e => { e.preventDefault(); dropzone.classList.remove("over"); }));
-  dropzone.addEventListener("drop", e => addFiles(e.dataTransfer.files));
+  dropzone.addEventListener("drop", e => { e.preventDefault(); dropzone.classList.remove("over"); addFiles(e.dataTransfer.files); });
 
   /* ---------- inline field errors ---------- */
   const FIELDS = ["title", "category", "location", "description"];

@@ -77,12 +77,12 @@
           <p class="counter" id="desc-count"></p>
 
           <span class="field-label">Add Photos (optional)</span>
-          <label class="dropzone" id="dropzone" for="photos">
+          <div class="dropzone" id="dropzone" role="button" tabindex="0" aria-label="Add Photos">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4zM12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg>
             <strong>Click to upload or drag and drop</strong>
             <small id="photo-hint"></small>
-          </label>
-          <input type="file" id="photos" class="sr-only" accept="image/*" multiple>
+          </div>
+          <input type="file" id="photos" style="display: none;" accept="image/*,.heic,.heif,.jpg,.jpeg,.png,.webp,.gif" multiple>
           <div class="thumbs" id="thumbs"></div>
 
           <p class="error" id="error" role="alert"></p>

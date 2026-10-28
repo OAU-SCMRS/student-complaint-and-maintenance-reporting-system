@@ -49,7 +49,7 @@ window.SCMRS_CONFIG = {
 
   /* Validation limits (the backend must enforce the same rules) */
   PASSWORD_MIN: 8,
-  PHOTOS: { max: 5, maxMB: 5 },
+  PHOTOS: { max: 5, maxMB: 15 },
 
   /* Endpoint map. Change a path here if your FastAPI routes differ.
    * Paths are appended to API_BASE. See docs/API_CONTRACT.md. */
