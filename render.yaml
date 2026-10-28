@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: fixoau-app
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
+      - key: DATABASE_URL
+        sync: false
+      - key: ADMIN_ACCESS_CODE
+        value: FIXOAU-ADMIN
