@@ -76,11 +76,12 @@ def login_user(user: UserLogin, db: Session = Depends(database.get_db)):
     if not db_user or db_user.password != user.password:
         raise HTTPException(status_code=401, detail="Invalid matric number or password")
     
-    return {
-        "message": "Login successful", 
-        "user_id": db_user.id, 
+   return {
+        "message": "Login successful",
+        "user_id": db_user.id,
         "role": db_user.role,
-        "name": db_user.name
+        "name": db_user.name,
+        "token": str(db_user.id) # This gives the frontend a valid token string to satisfy core.js
     }
 
 @app.put("/users/{user_id}")
