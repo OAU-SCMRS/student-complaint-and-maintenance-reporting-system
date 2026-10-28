@@ -1,22 +1,20 @@
 import os
-from typing import Optional
-from fastapi import FastAPI, Depends, HTTPException, File, UploadFile, Form
+import shutil
+from typing import List, Optional
+from fastapi import FastAPI, Depends, HTTPException, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
+from pydantic import BaseModel
 
 import models
-from database import engine, get_db
+import database
 
-# Create all MySQL database tables automatically on startup
-models.Base.metadata.create_all(bind=engine)
+# Create tables
+models.Base.metadata.create_all(bind=database.engine)
 
-app = FastAPI(
-    title="OAU Student Complaint & Maintenance Reporting System API",
-    description="Backend API for student complaint submission, tracking, and admin management.",
-    version="1.0.0"
-)
+app = FastAPI(title="FixOAU Backend API")
 
-# Enable CORS for frontend integration
+# Configure CORS for frontend integration
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -25,150 +23,160 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/")
-def read_root():
-    return {
-        "message": "Student Complaint System API is online!",
-        "documentation": "/docs"
-    }
+# Ensure upload directory exists
+UPLOAD_DIR = "uploads"
+os.makedirs(UPLOAD_DIR, exist_ok=True)
 
-# ---------------------------------------------------------
-# AUTHENTICATION ENDPOINTS
-# ---------------------------------------------------------
+# --- PYDANTIC SCHEMAS ---
+class UserRegister(BaseModel):
+    name: str
+    email: str
+    matric_number: str
+    phone: Optional[str] = None
+    password: str
+
+class UserLogin(BaseModel):
+    matric_number: str
+    password: str
+
+class ProfileUpdate(BaseModel):
+    name: str
+    email: str
+    phone: Optional[str] = None
+
+class PasswordUpdate(BaseModel):
+    current_password: str
+    new_password: str
+
+# --- AUTH & USER ENDPOINTS ---
 
 @app.post("/auth/register")
-def register(
-    name: str = Form(...),
-    email: str = Form(...),
-    password: str = Form(...),
-    role: str = Form("student"),
-    db: Session = Depends(get_db)
-):
-    existing_user = db.query(models.User).filter(models.User.email == email).first()
-    if existing_user:
-        raise HTTPException(status_code=400, detail="Email is already registered")
+def register_user(user: UserRegister, db: Session = Depends(database.get_db)):
+    db_user = db.query(models.User).filter(
+        (models.User.email == user.email) | (models.User.matric_number == user.matric_number)
+    ).first()
+    if db_user:
+        raise HTTPException(status_code=400, detail="Email or Matric Number already registered")
     
-    new_user = models.User(name=name, email=email, password=password, role=role)
+    new_user = models.User(
+        name=user.name,
+        email=user.email,
+        matric_number=user.matric_number,
+        phone=user.phone,
+        password=user.password  # Note: In production, hash this password!
+    )
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
     return {"message": "User registered successfully", "user_id": new_user.id}
 
-
 @app.post("/auth/login")
-def login(
-    email: str = Form(...),
-    password: str = Form(...),
-    db: Session = Depends(get_db)
-):
-    user = db.query(models.User).filter(
-        models.User.email == email, 
-        models.User.password == password
-    ).first()
-    
-    if not user:
-        raise HTTPException(status_code=401, detail="Invalid email or password")
+def login_user(user: UserLogin, db: Session = Depends(database.get_db)):
+    db_user = db.query(models.User).filter(models.User.matric_number == user.matric_number).first()
+    if not db_user or db_user.password != user.password:
+        raise HTTPException(status_code=401, detail="Invalid matric number or password")
     
     return {
-        "message": "Login successful",
-        "user_id": user.id,
-        "name": user.name,
-        "role": user.role
+        "message": "Login successful", 
+        "user_id": db_user.id, 
+        "role": db_user.role,
+        "name": db_user.name
     }
 
-# ---------------------------------------------------------
-# COMPLAINTS ENDPOINTS
-# ---------------------------------------------------------
+@app.put("/users/{user_id}")
+def update_profile(user_id: int, profile: ProfileUpdate, db: Session = Depends(database.get_db)):
+    db_user = db.query(models.User).filter(models.User.id == user_id).first()
+    if not db_user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    db_user.name = profile.name
+    db_user.email = profile.email
+    db_user.phone = profile.phone
+    db.commit()
+    return {"message": "Profile updated successfully"}
 
-@app.get("/complaints/")
-def get_all_complaints(db: Session = Depends(get_db)):
-    return db.query(models.Complaint).all()
+@app.put("/users/{user_id}/password")
+def update_password(user_id: int, passwords: PasswordUpdate, db: Session = Depends(database.get_db)):
+    db_user = db.query(models.User).filter(models.User.id == user_id).first()
+    if not db_user or db_user.password != passwords.current_password:
+        raise HTTPException(status_code=400, detail="Incorrect current password")
+    
+    db_user.password = passwords.new_password
+    db.commit()
+    return {"message": "Password updated successfully"}
 
+# --- COMPLAINT ENDPOINTS ---
 
 @app.post("/complaints/")
-async def create_complaint(
+async def submit_complaint(
     user_id: int = Form(...),
     title: str = Form(...),
     category: str = Form(...),
     location: str = Form(...),
     description: str = Form(...),
-    file: Optional[UploadFile] = File(None),
-    db: Session = Depends(get_db)
+    files: List[UploadFile] = File(None),
+    db: Session = Depends(database.get_db)
 ):
-    image_url = None
-    if file:
-        os.makedirs("uploads", exist_ok=True)
-        file_path = f"uploads/{file.filename}"
-        with open(file_path, "wb") as f:
-            f.write(await file.read())
-        image_url = f"/{file_path}"
-
+    image_urls = []
+    
+    if files:
+        for file in files:
+            file_location = f"{UPLOAD_DIR}/{file.filename}"
+            with open(file_location, "wb") as buffer:
+                shutil.copyfileobj(file.file, buffer)
+            image_urls.append(f"/{file_location}")
+            
     new_complaint = models.Complaint(
         user_id=user_id,
         title=title,
         category=category,
         location=location,
         description=description,
-        status="Pending",
-        image_url=image_url
+        image_urls=image_urls if image_urls else None
     )
     db.add(new_complaint)
     db.commit()
     db.refresh(new_complaint)
-    return {"message": "Complaint submitted successfully", "complaint": new_complaint}
-
+    return {"message": "Complaint submitted successfully", "complaint_id": new_complaint.id}
 
 @app.get("/complaints/user/{user_id}")
-def get_user_complaints(user_id: int, db: Session = Depends(get_db)):
-    return db.query(models.Complaint).filter(models.Complaint.user_id == user_id).all()
-
-
-@app.get("/complaints/{complaint_id}/history")
-def get_complaint_history(complaint_id: int, db: Session = Depends(get_db)):
-    updates = db.query(models.Update).filter(models.Update.complaint_id == complaint_id).all()
-    return {"complaint_id": complaint_id, "history": updates}
-
-
-@app.patch("/complaints/{complaint_id}/status")
-def update_complaint_status(
-    complaint_id: int,
-    status: str = Form(...),
-    message: str = Form(...),
-    updated_by: str = Form(...),
-    db: Session = Depends(get_db)
-):
-    complaint = db.query(models.Complaint).filter(models.Complaint.id == complaint_id).first()
-    if not complaint:
-        raise HTTPException(status_code=404, detail="Complaint not found")
+def get_user_complaints(user_id: int, status: Optional[str] = None, db: Session = Depends(database.get_db)):
+    query = db.query(models.Complaint).filter(models.Complaint.user_id == user_id)
+    if status and status.lower() != "all":
+        query = query.filter(models.Complaint.status == status)
     
-    prev_status = complaint.status
-    complaint.status = status
-    
-    # Track update history
-    status_update = models.Update(
-        complaint_id=complaint_id,
-        previous_status=prev_status,
-        new_status=status,
-        message=message,
-        updated_by=updated_by
-    )
-    
-    # Notify user automatically
-    notification = models.Notification(
-        user_id=complaint.user_id,
-        message=f"Your complaint '{complaint.title}' status was updated to {status}."
-    )
-    
-    db.add(status_update)
-    db.add(notification)
-    db.commit()
-    
-    return {"message": "Complaint status updated successfully", "current_status": status}
+    complaints = query.order_by(models.Complaint.created_at.desc()).all()
+    return complaints
 
-# ---------------------------------------------------------
-# NOTIFICATIONS ENDPOINTS
-# ---------------------------------------------------------
+@app.get("/complaints/stats/{user_id}")
+def get_dashboard_stats(user_id: int, db: Session = Depends(database.get_db)):
+    complaints = db.query(models.Complaint).filter(models.Complaint.user_id == user_id).all()
+    
+    total = len(complaints)
+    pending = sum(1 for c in complaints if c.status.lower() == "pending")
+    in_progress = sum(1 for c in complaints if c.status.lower() == "in progress")
+    resolved = sum(1 for c in complaints if c.status.lower() == "resolved")
+    
+    return {
+        "total": total,
+        "pending": pending,
+        "in_progress": in_progress,
+        "resolved": resolved
+    }
+
+# --- NOTIFICATION ENDPOINTS ---
 
 @app.get("/notifications/{user_id}")
-def get_user_notifications(user_id: int, db: Session = Depends(get_db)):
-    return db.query(models.Notification).filter(models.Notification.user_id == user_id).all()
+def get_notifications(user_id: int, db: Session = Depends(database.get_db)):
+    notifications = db.query(models.Notification).filter(models.Notification.user_id == user_id).order_by(models.Notification.created_at.desc()).all()
+    return notifications
+
+@app.put("/notifications/read-all/{user_id}")
+def mark_all_notifications_read(user_id: int, db: Session = Depends(database.get_db)):
+    db.query(models.Notification).filter(
+        models.Notification.user_id == user_id, 
+        models.Notification.is_read == False
+    ).update({"is_read": True})
+    
+    db.commit()
+    return {"message": "All notifications marked as read"}
