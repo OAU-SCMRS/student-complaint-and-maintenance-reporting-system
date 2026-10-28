@@ -59,7 +59,7 @@ SCMRS.page(({ role }) => {
     const btn = $('button[type="submit"]', pwForm);
     ui.say(pwErr, ""); ui.busy(btn, true, "Updating...");
     try {
-      await api("POST", config.ENDPOINTS.changePassword, { body: { current_password: current, new_password: next }, auth: false });
+      await api("POST", config.ENDPOINTS.changePassword, { body: { current_password: current, new_password: next } });
       pwForm.reset();
       ui.toast("Password updated.");
     } catch (err) { ui.say(pwErr, err.message); }

@@ -73,8 +73,10 @@ SCMRS.page(() => {
 
   function fillDialog(c) {
     $("#dialog-title").textContent = `${ui.refOf(c)} \u2013 ${c.title}`;
-    const photos = (c.photos || []).map((u, i) =>
-      `<a href="${ui.esc(u)}" target="_blank" rel="noopener"><img src="${ui.esc(u)}" alt="Photo ${i + 1}"></a>`).join("");
+    const photos = (c.photos || []).map((rawUrl, i) => {
+      const u = ui.mediaUrl(rawUrl);
+      return `<a href="${ui.esc(u)}" target="_blank" rel="noopener"><img src="${ui.esc(u)}" alt="Photo ${i + 1}"></a>`;
+    }).join("");
     const s = c.student || {};
     $("#dialog-info").innerHTML = `
       <dl>

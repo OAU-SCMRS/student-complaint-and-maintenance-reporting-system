@@ -24,8 +24,10 @@ SCMRS.page(async () => {
 
   document.title = `${ui.refOf(c)} | FixOAU`;
 
-  const photos = (c.photos || []).map((url, i) =>
-    `<div class="photo-box"><a href="${ui.esc(url)}" target="_blank" rel="noopener"><img src="${ui.esc(url)}" alt="Photo ${i + 1} of the problem"></a></div>`).join("");
+  const photos = (c.photos || []).map((rawUrl, i) => {
+    const url = ui.mediaUrl(rawUrl);
+    return `<div class="photo-box"><a href="${ui.esc(url)}" target="_blank" rel="noopener"><img src="${ui.esc(url)}" alt="Photo ${i + 1} of the problem"></a></div>`;
+  }).join("");
   const noPhoto = `<div class="photo-box"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4zM12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg>No photo attached</div>`;
 
   // oldest first: the CSS highlights the last entry as the current state

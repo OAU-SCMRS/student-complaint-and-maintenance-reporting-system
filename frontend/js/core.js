@@ -180,7 +180,7 @@
 
   async function logout() {
     const role = document.body.dataset.role || (session.user() || {}).role;
-    if (!session.isDemo()) { try { await api("POST", C.ENDPOINTS.logout, { auth: false }); } catch (e) { /* still log out locally */ } }
+    if (!session.isDemo()) { try { await api("POST", C.ENDPOINTS.logout); } catch (e) { /* still log out locally */ } }
     session.clear();
     window.location.replace(C.ROUTES.landing);
   }
@@ -446,12 +446,22 @@
     });
   }
 
+  function mediaUrl(url) {
+    if (!url) return "";
+    if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("data:")) return url;
+    if (C.API_BASE && !C.API_BASE.startsWith("/")) {
+      const origin = C.API_BASE.replace(/\/api\/?$/, "");
+      return origin + (url.startsWith("/") ? url : "/" + url);
+    }
+    return url;
+  }
+
   window.SCMRS = {
     config: C, $, $$, api, ApiError, session, page, onReady, demoEnabled,
     auth: { login, register, logout, requireRole, redirectIfLoggedIn, goLogin },
     notifications: { refresh: pollNotifications },
     meta, paintUser,
-    ui: { esc, fmtDate, fmtDateTime, timeAgo, initials, greeting, badge, statusMeta, refOf,
+    ui: { esc, fmtDate, fmtDateTime, timeAgo, initials, greeting, badge, statusMeta, refOf, mediaUrl,
           toast, say, busy, invalid, check, debounce, param, tableMessage, renderPager }
   };
 })();
