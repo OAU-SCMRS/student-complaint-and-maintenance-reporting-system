@@ -1,0 +1,92 @@
+/* ==========================================================================
+   FixOAU - base.css
+   Shared by every page: design tokens, light/dark themes, reset, focus ring.
+   Load this first, then the page's own stylesheet
+   (style.css = landing, auth.css = login/sign-up, dashboard.css = dashboards).
+   ========================================================================== */
+:root {
+  color-scheme: light dark;
+
+  /* brand */
+  --blue: #1A56C8;
+  --blue-dark: #0F3D96;
+  --navy: #0B2A66;
+  --gold: #F2B632;
+
+  /* surfaces + text */
+  --bg: #F4F7FC;
+  --tint: #F2F6FD;
+  --surface: #FFFFFF;
+  --ink: #16233F;
+  --heading: #0B2A66;
+  --muted: #5B6885;
+  --line: #DCE4F3;
+
+  /* text that sits on a surface: links, small accents */
+  --link: #1A56C8;
+  --green: #17803D;
+  --red: #B3261E;
+
+  /* soft tinted backgrounds + the text colour that goes on them */
+  --blue-soft: #E3EDFF;
+  --blue-softer: #EAF1FF;
+  --amber-soft: #FFF3D6;
+  --amber-ink: #8A5B00;
+  --violet-soft: #EDE7FF;
+  --violet-ink: #6B4EE6;
+  --green-soft: #DDF3E5;
+  --red-soft: #FDE4E4;
+
+  --scrim: rgba(11, 42, 102, .5);
+  --shadow: 0 8px 20px rgba(26, 86, 200, .08);
+
+  --font: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --radius: 14px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0B1322;
+    --tint: #0E182C;
+    --surface: #131E35;
+    --ink: #E5EBF8;
+    --heading: #F1F5FF;
+    --muted: #9CAACB;
+    --line: #26355A;
+
+    --link: #8DB1FF;
+    --green: #5FD08A;
+    --red: #FF8A80;
+
+    --blue-soft: #1B2E5C;
+    --blue-softer: #172750;
+    --amber-soft: #3A2D0E;
+    --amber-ink: #F5C95C;
+    --violet-soft: #2A2354;
+    --violet-ink: #B7A6FF;
+    --green-soft: #13341F;
+    --red-soft: #3F1B1B;
+
+    --scrim: rgba(2, 8, 20, .65);
+    --shadow: 0 8px 20px rgba(0, 0, 0, .35);
+  }
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { font-family: var(--font); color: var(--ink); background: var(--bg); line-height: 1.6; }
+a { color: inherit; text-decoration: none; }
+img, svg { max-width: 100%; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+[hidden] { display: none !important; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+}

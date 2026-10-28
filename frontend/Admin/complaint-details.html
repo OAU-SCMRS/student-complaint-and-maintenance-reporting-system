@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complaint details | FixOAU</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin-dashboard.css">
+</head>
+<body>
+
+  <aside class="sidebar" id="sidebar">
+    <a class="side-brand" href="../index.html">
+      <img src="../images/logo.svg" alt="" width="26" height="31">
+      <span>FixOAU</span>
+    </a>
+    <nav class="side-nav">
+      <a href="../students/student.html">Dashboard</a>
+      <a href="../students/report.html">Report a Problem</a>
+      <a href="../students/complaints.html" class="active">My Complaints</a>
+      <a href="../students/notifications.html">Notifications</a>
+      <a href="../students/profile.html">Profile</a>
+    </nav>
+    <a class="logout" href="../index.html">Log Out</a>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <button class="menu-btn" id="menu-btn" aria-label="Menu">Menu</button>
+      <div class="greet">
+        <a class="back" href="../students/complaints.html">← Back to My Complaints</a>
+      </div>
+      <div class="top-right">
+        <a class="bell" href="../students/notifications.html" aria-label="Notifications">
+          <svg viewBox="0 0 24 24"><path d="M6 17V11a6 6 0 1 1 12 0v6l1.5 2h-15zM10 21h4"/></svg>
+        </a>
+        <span class="avatar" id="avatar"></span>
+      </div>
+    </header>
+
+    <main class="content">
+      <section class="panel" id="detail"></section>
+    </main>
+  </div>
+
+</body>
+</html>

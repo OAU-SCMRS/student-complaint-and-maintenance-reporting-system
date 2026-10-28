@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notifications | FixOAU</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body data-role="student">
+
+  <input type="checkbox" id="nav-check" class="nav-check" aria-label="Toggle navigation menu">
+  <label class="sidebar-overlay" for="nav-check"></label>
+
+  <aside class="sidebar">
+    <a class="side-brand" href="../index.html">
+      <img src="../images/logo.svg" alt="" width="26" height="31">
+      <span>FixOAU</span>
+    </a>
+    <p class="side-role">Student</p>
+    <label class="side-close" for="nav-check"><span class="sr-only">Close menu</span></label>
+    <nav class="side-nav">
+      <a href="student.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h7v7H4zM13 4h7v4h-7zM13 11h7v9h-7zM4 14h7v6H4z"/></svg><span>Dashboard</span></a>
+      <a href="report.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg><span>Report a Problem</span></a>
+      <a href="complaints.html"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9zM9 12h6M9 16h4"/></svg><span>My Complaints</span></a>
+      <a href="notifications.html" class="active" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 17V11a6 6 0 1 1 12 0v6l1.5 2h-15zM10 21h4"/></svg><span>Notifications</span></a>
+      <a href="profile.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.6 3-6 7-6s7 2.4 7 6"/></svg><span>Profile</span></a>
+    </nav>
+    <a class="logout" href="../index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4H5v16h5M15 8l4 4-4 4M19 12H9"/></svg><span>Log Out</span></a>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <label class="menu-btn" for="nav-check"><span class="bars" aria-hidden="true"></span><span class="sr-only">Open menu</span></label>
+      <div class="greet">
+        <h1>Notifications</h1>
+        <p>Stay up to date with your complaints.</p>
+      </div>
+      <div class="top-right">
+        <a class="bell" href="notifications.html" aria-label="Notifications">
+          <svg viewBox="0 0 24 24"><path d="M6 17V11a6 6 0 1 1 12 0v6l1.5 2h-15zM10 21h4"/></svg>
+        </a>
+        <span class="avatar" id="avatar"></span>
+      </div>
+    </header>
+
+    <main class="content">
+      <div class="page-actions">
+        <div class="tabs" role="tablist">
+          <button class="tab active" role="tab" data-tab="All">All</button>
+          <button class="tab" role="tab" data-tab="Unread">Unread</button>
+        </div>
+        <button class="mark-all" id="mark-all">Mark all as read</button>
+      </div>
+
+      <div class="notif-list" id="list"></div>
+      <p class="empty" id="empty" hidden>You are all caught up.</p>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/core.js"></script>
+  <script src="../js/demo.js"></script>
+  <script src="../js/notifications.js"></script>
+
+</body>
+</html>

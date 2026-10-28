@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage complaints | FixOAU</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body data-role="admin">
+
+  <input type="checkbox" id="nav-check" class="nav-check" aria-label="Toggle navigation menu">
+  <label class="sidebar-overlay" for="nav-check"></label>
+
+  <aside class="sidebar">
+    <a class="side-brand" href="../index.html">
+      <img src="../images/logo.svg" alt="" width="26" height="31">
+      <span>FixOAU</span>
+    </a>
+    <p class="side-role">Staff console</p>
+    <label class="side-close" for="nav-check"><span class="sr-only">Close menu</span></label>
+    <nav class="side-nav">
+      <a href="admin.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h7v7H4zM13 4h7v4h-7zM13 11h7v9h-7zM4 14h7v6H4z"/></svg><span>Overview</span></a>
+      <a href="manage-complaints.html" class="active" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9zM9 12h6M9 16h4"/></svg><span>Manage Complaints</span></a>
+      <a href="adminreports.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span>Reports &amp; Analytics</span></a>
+      <a href="admin-notifications.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 17V11a6 6 0 1 1 12 0v6l1.5 2h-15zM10 21h4"/></svg><span>Notifications</span></a>
+      <a href="admin-profile.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg><span>Settings</span></a>
+    </nav>
+    <a class="logout" href="../index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4H5v16h5M15 8l4 4-4 4M19 12H9"/></svg><span>Log Out</span></a>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <label class="menu-btn" for="nav-check"><span class="bars" aria-hidden="true"></span><span class="sr-only">Open menu</span></label>
+      <div class="greet">
+        <h1>Manage Complaints</h1>
+        <p>View, assign and update complaints.</p>
+      </div>
+      <div class="top-right">
+        <a class="bell" href="admin-notifications.html" aria-label="Notifications">
+          <svg viewBox="0 0 24 24"><path d="M6 17V11a6 6 0 1 1 12 0v6l1.5 2h-15zM10 21h4"/></svg>
+        </a>
+        <span class="avatar" id="avatar"></span>
+      </div>
+    </header>
+
+    <main class="content">
+      <div class="toolbar">
+        <input type="search" id="search" placeholder="Search by ID, problem or location..." aria-label="Search complaints">
+        <select id="filter" aria-label="Filter by status">
+          <option value="">All Status</option>
+        </select>
+      </div>
+
+      <section class="panel">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>ID</th><th>Problem</th><th>Location</th><th>Status</th><th>Assigned To</th><th>Action</th></tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+          </table>
+        </div>
+        <nav class="pager" id="pager" aria-label="Pagination" hidden></nav>
+        <p class="empty" id="empty" hidden>No complaints match your search.</p>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="dialog" class="dialog">
+    <h2 id="dialog-title"></h2>
+    <div class="dialog-info" id="dialog-info"></div>
+
+    <label for="dialog-status">Status</label>
+    <select id="dialog-status" autofocus></select>
+
+    <label for="dialog-assignee">Assigned to</label>
+    <input type="text" id="dialog-assignee" list="assignee-list" autocomplete="off" placeholder="e.g. Electrical unit">
+    <datalist id="assignee-list"></datalist>
+
+    <label>Updates sent to the student</label>
+    <ul class="notes" id="dialog-notes"></ul>
+
+    <label for="note-text">New update for the student</label>
+    <textarea id="note-text" rows="3" placeholder="e.g. An electrician has been assigned"></textarea>
+    <p class="error" id="note-error" role="alert"></p>
+    <div class="dialog-actions">
+      <button type="button" class="btn-ghost" id="note-cancel">Cancel</button>
+      <button type="button" class="btn-small" id="note-save">Save update</button>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/core.js"></script>
+  <script src="../js/demo.js"></script>
+  <script src="../js/manage-complaints.js"></script>
+
+</body>
+</html>

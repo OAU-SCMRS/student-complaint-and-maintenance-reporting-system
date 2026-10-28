@@ -1,0 +1,96 @@
+/* ==========================================================================
+   FixOAU - auth.css (needs base.css)
+   Login + sign-up for both roles. One stylesheet; the role comes from
+   <body data-auth-role="student|admin">:
+     student -> campus photo panel, blue accents
+     admin   -> dark "staff console" panel, gold accents
+   ========================================================================== */
+body[data-auth-role="student"] {
+  --aside-bg: linear-gradient(rgba(11, 42, 102, .84), rgba(8, 31, 80, .92)), url("../images/campus.jpg") 60% center / cover no-repeat;
+  --aside-mark: var(--gold);
+}
+body[data-auth-role="admin"] {
+  --aside-bg: linear-gradient(165deg, #121C30, #0A101D);
+  --aside-mark: var(--gold);
+}
+
+.auth { min-height: 100vh; min-height: 100dvh; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); }
+
+/* Left panel */
+.auth-aside {
+  background: var(--aside-bg); color: #fff;
+  padding: 36px 5vw; display: flex; flex-direction: column; justify-content: space-between; gap: 32px;
+}
+.auth-brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.25rem; width: fit-content; }
+.auth-brand img { background: #fff; padding: 4px; border-radius: 8px; }
+.auth-role { font-weight: 700; font-size: .95rem; color: #FFD36E; margin-bottom: 10px; }
+.auth-pitch h2 { font-size: clamp(1.6rem, 2.6vw, 2.3rem); line-height: 1.2; font-weight: 800; letter-spacing: -0.01em; max-width: 18ch; text-wrap: balance; }
+.auth-pitch { border-left: 3px solid var(--aside-mark); padding-left: 18px; }
+.auth-note { color: #C9D6F2; font-size: .9rem; max-width: 36ch; }
+
+/* Right panel */
+.auth-main { display: grid; place-items: center; padding: 40px 24px; background: var(--surface); }
+.auth-card { width: min(420px, 100%); }
+.auth-card h1 { font-size: 1.8rem; font-weight: 800; color: var(--heading); letter-spacing: -0.01em; }
+.auth-sub { color: var(--muted); margin: 4px 0 22px; }
+
+.field { display: grid; gap: 6px; margin-bottom: 16px; }
+.field label { font-weight: 700; font-size: .9rem; }
+.field input {
+  width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px;
+  background: var(--surface); color: var(--ink);
+}
+.field input::placeholder { color: var(--muted); opacity: .8; }
+.field input:hover { border-color: var(--muted); }
+.field input:focus-visible { outline: 3px solid var(--gold); outline-offset: 1px; border-color: var(--blue); }
+.field input.invalid { border-color: var(--red); box-shadow: 0 0 0 1px var(--red); }   /* same width as normal: no layout jump */
+.hint { color: var(--muted); font-size: .8rem; }
+
+.pw-field { position: relative; }
+.pw-field input { padding-right: 76px; }
+.pw-toggle {
+  position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+  border: 0; background: none; color: var(--link); font-weight: 700; font-size: .85rem;
+  cursor: pointer; padding: 8px 10px; border-radius: 8px;
+}
+.pw-toggle:hover { background: var(--blue-softer); }
+
+.error-msg { color: var(--red); font-size: .9rem; margin: 4px 0 12px; min-height: 1.4em; }  /* reserved height: no jump */
+.error-msg.ok { color: var(--green); }
+
+.btn-auth {
+  width: 100%; padding: 14px; border: 0; border-radius: 10px; background: var(--blue); color: #fff;
+  font-weight: 700; font-size: 1rem; cursor: pointer; transition: background .15s;
+}
+.btn-auth:hover { background: var(--blue-dark); }
+.btn-auth:disabled { opacity: .6; cursor: wait; }
+
+.auth-alt, .auth-home { text-align: center; margin-top: 16px; font-size: .95rem; color: var(--muted); }
+.auth-alt a, .auth-home a { color: var(--link); font-weight: 700; }
+.auth-alt a:hover, .auth-home a:hover { text-decoration: underline; }
+.auth-home { margin-top: 10px; }
+
+/* Demo login (button is added by js/demo.js only while demo mode is on) */
+.demo-box { margin: 18px 0 4px; padding-top: 16px; border-top: 1px dashed var(--line); text-align: center; }
+.demo-box p { font-size: .9rem; margin-bottom: 8px; color: var(--muted); }
+.demo-box small { display: block; margin-top: 6px; color: var(--muted); }
+.demo-btn {
+  width: 100%; padding: 12px; border: 2px solid var(--blue); border-radius: 10px;
+  background: transparent; color: var(--link); font-weight: 700; cursor: pointer;
+}
+.demo-btn:hover { background: var(--blue-softer); }
+
+/* Admin: gold primary-line instead of the student's blue */
+body[data-auth-role="admin"] .auth-card h1::after {
+  content: ""; display: block; width: 44px; height: 4px; border-radius: 4px; background: var(--gold); margin-top: 10px;
+}
+
+/* Phones and narrow windows: the panel shrinks to a header strip */
+@media (max-width: 800px) {
+  .auth { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+  .auth-aside { padding: 16px 20px; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; }
+  .auth-pitch { border: 0; padding: 0; }
+  .auth-pitch h2, .auth-note { display: none; }
+  .auth-role { margin: 0; }
+  .auth-main { place-items: start center; padding: 28px 20px 40px; }
+}

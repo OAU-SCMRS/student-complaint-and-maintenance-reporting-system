@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin sign up | FixOAU</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/auth.css">
+</head>
+<body data-auth-role="admin">
+
+  <div class="auth">
+    <aside class="auth-aside">
+      <a class="auth-brand" href="../index.html">
+        <img src="../images/logo.svg" alt="" width="26" height="31">
+        <span>FixOAU</span>
+      </a>
+      <div class="auth-pitch">
+        <p class="auth-role">Staff console</p>
+        <h2>Review, assign and resolve campus maintenance requests.</h2>
+      </div>
+      <p class="auth-note">An access code from the system owner is required.</p>
+    </aside>
+
+    <main class="auth-main">
+    <form class="auth-card" id="registerForm" method="post" novalidate>
+      <h1>Admin Sign Up</h1>
+      <p class="auth-sub">Create your administrator account.</p>
+
+      <div class="field">
+        <label for="fullName">Full name</label>
+        <input type="text" id="fullName" name="fullName" placeholder="Your full name" autocomplete="name" required>
+      </div>
+      <div class="field">
+        <label for="adminId">Admin ID</label>
+        <input type="text" id="adminId" name="adminId" placeholder="Your admin ID" autocomplete="username" required>
+      </div>
+      <div class="field">
+        <label for="email">Email address</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+      </div>
+      <div class="field">
+        <label for="password">Create password</label>
+        <div class="pw-field">
+          <input type="password" id="password" name="password" placeholder="Create a password" autocomplete="new-password" required>
+          <button type="button" class="pw-toggle" data-target="password" aria-label="Show password">Show</button>
+        </div>
+        <small class="hint">At least 8 characters, with a letter and a number.</small>
+      </div>
+      <div class="field">
+        <label for="confirmPassword">Confirm password</label>
+        <div class="pw-field">
+          <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Repeat the password" autocomplete="new-password" required>
+          <button type="button" class="pw-toggle" data-target="confirmPassword" aria-label="Show password">Show</button>
+        </div>
+      </div>
+      <div class="field">
+        <label for="accessCode">Admin access code</label>
+        <div class="pw-field">
+          <input type="password" id="accessCode" name="accessCode" placeholder="Access code" autocomplete="off" required>
+          <button type="button" class="pw-toggle" data-target="accessCode" aria-label="Show password">Show</button>
+        </div>
+      </div>
+
+      <p id="errorMsg" class="error-msg" role="alert" aria-live="polite"></p>
+
+      <button type="submit" id="registerBtn" class="btn-auth">Register</button>
+
+      <p class="auth-alt">Have an account? <a href="adminlogin.html">Login</a></p>
+      <p class="auth-home"><a href="../index.html">Back to home</a></p>
+    </form>
+    </main>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/core.js"></script>
+  <script src="../js/demo.js"></script>
+  <script src="../js/register.js"></script>
+</body>
+</html>
