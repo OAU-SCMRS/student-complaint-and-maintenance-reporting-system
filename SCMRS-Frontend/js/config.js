@@ -16,8 +16,8 @@ window.SCMRS_CONFIG = {
    *      "Authorization: Bearer ...", so allow_headers must include "Authorization".
    *      Only set CREDENTIALS to "include" (and allow_credentials=True) if you use cookie sessions.
    */
-  API_BASE: "/api",
-  CREDENTIALS: "same-origin",
+  API_BASE: "https://student-complaint-and-maintenance.onrender.com",
+  CREDENTIALS: "omit",
 
   /* DEMO MODE: lets people explore the student and admin dashboards with sample data and no
    * backend. Everything is stored in the visitor's own browser; nothing is sent to the server.
