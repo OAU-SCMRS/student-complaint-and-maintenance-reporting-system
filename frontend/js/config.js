@@ -16,15 +16,17 @@ window.SCMRS_CONFIG = {
    *      "Authorization: Bearer ...", so allow_headers must include "Authorization".
    *      Only set CREDENTIALS to "include" (and allow_credentials=True) if you use cookie sessions.
    */
-  API_BASE: "/api",
-  CREDENTIALS: "same-origin",
+  API_BASE: (typeof window !== "undefined" && (window.location.port === "8000" || window.location.pathname.startsWith("/api")))
+    ? "/api"
+    : "http://127.0.0.1:8000/api",
+  CREDENTIALS: "omit",
 
   /* DEMO MODE: lets people explore the student and admin dashboards with sample data and no
    * backend. Everything is stored in the visitor's own browser; nothing is sent to the server.
    *  - Keep false in production. When false the demo button is not shown, demo.js does nothing,
    *    and any leftover demo session is discarded on the next page load.
    *  - Even when true it only works on the hosts listed below (set to null to allow any host). */
-  DEMO_MODE: true,
+  DEMO_MODE: false,
   DEMO_ALLOWED_HOSTS: ["localhost", "127.0.0.1", "", "oauscmrsfrontend.vercel.app"],   // "" = opened from a file (file://)
 
   /* How often (ms) the browser asks the backend for new notifications. */

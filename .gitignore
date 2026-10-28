@@ -1,0 +1,25 @@
+# Python & Virtual Environments
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Environment Secrets
+.env
+*.env
+.env.local
+
+# User uploads & databases
+uploads/
+backend/uploads/
+*.db
+*.sqlite
+*.sqlite3
+
+# OS / Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
