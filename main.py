@@ -75,8 +75,8 @@ def login_user(user: UserLogin, db: Session = Depends(database.get_db)):
     db_user = db.query(models.User).filter(models.User.matric_number == user.matric_number).first()
     if not db_user or db_user.password != user.password:
         raise HTTPException(status_code=401, detail="Invalid matric number or password")
-    
- return {
+
+    return {
         "message": "Login successful",
         "user_id": db_user.id,
         "role": db_user.role,

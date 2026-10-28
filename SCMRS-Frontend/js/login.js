@@ -1,44 +1,52 @@
-/*
- * Login (student + admin).  <body data-auth-role="student|admin">
- * Sends the credentials to the backend; on success goes straight to that role's dashboard.
- */
-SCMRS.onReady(() => {
-  const { $, auth, ui, config } = SCMRS;
-  const role = document.body.dataset.authRole;
-  if (!role || auth.redirectIfLoggedIn(role)) return;
+// 1. Define your live Render API URL
+const API_BASE_URL = "https://student-complaint-and-maintenance.onrender.com";
 
-  const form = $("#loginForm");
-  const idInput = $('input[name="studentId"], input[name="adminId"]', form);
-  const pwInput = $("#password", form);
-  const msg = $("#errorMsg");
-  const submit = $('button[type="submit"]', form);
+// 2. Select the login form and listen for the submit button
+document.getElementById("loginForm").addEventListener("submit", async function(event) {
+    event.preventDefault(); // Prevents the page from reloading
 
-  // Notices passed from other pages (after registering, or when a session ran out)
-  if (ui.param("registered")) ui.say(msg, "Account created. Log in to continue.", "ok");
-  else if (ui.param("expired")) ui.say(msg, "Your session has expired. Please log in again.");
+    // 3. Grab the typed values from the input boxes (check your HTML for the exact IDs)
+    const matricNumberInput = document.getElementById("studentId").value;
+    const passwordInput = document.getElementById("password").value;
 
-  [idInput, pwInput].forEach(i => i.addEventListener("input", () => ui.invalid(i, false)));
-
-  form.addEventListener("submit", async e => {
-    e.preventDefault();
-    const loginId = idInput.value.trim();
-    const password = pwInput.value;
-
-    ui.invalid(idInput, !loginId);
-    ui.invalid(pwInput, !password);
-    if (!loginId || !password) { ui.say(msg, `Enter your ${role === "admin" ? "admin" : "student"} ID and password.`); return; }
-
-    ui.say(msg, "");
-    ui.busy(submit, true, "Logging in...");
     try {
-      await auth.login(role, loginId, password);
-      window.location.href = config.ROUTES[role].home;
-    } catch (err) {
-      ui.say(msg, err.status === 401 ? "Incorrect ID or password." : err.message);
-      ui.invalid(pwInput, err.status === 401);
-      pwInput.value = "";
-      pwInput.focus();
-      ui.busy(submit, false);
+        // 4. Send the POST request to your FastAPI backend
+        const response = await fetch(`${API_BASE_URL}/auth/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ 
+                matric_number: matricNumberInput, 
+                password: passwordInput 
+            })
+        });
+
+        const data = await response.json();
+
+        // 5. Handle the backend's response
+        if (response.ok) {
+            alert("Login Successful!");
+            
+          // Ensure we capture whatever fields your FastAPI backend returns
+        const sessionData = {
+            user: {
+                id: data.user_id,
+                matric_number: data.matric_number,
+                name: data.name,
+                role: data.role
+            },
+            token: data.token || "active-session"
+        };
+        localStorage.setItem("scmrs.session", JSON.stringify(sessionData));
+        // Redirect to the student dashboard
+        window.location.href = "./student.html";
+        } else {
+            // Shows the "Invalid matric number or password" error from your FastAPI code
+            alert("Error: " + data.detail); 
+        }
+    } catch (error) {
+        console.error("Failed to connect to the API", error);
+        alert("Could not connect to the server.");
     }
-  });
 });
